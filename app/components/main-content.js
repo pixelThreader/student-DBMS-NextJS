@@ -1,19 +1,19 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Client, Databases } from 'appwrite';
-import TableRow from './table-row';
+import Link from 'next/link';
 
 function MainContent() {
     const [students, setStudents] = useState([]);
 
-    const client = new Client()
-        .setEndpoint('https://cloud.appwrite.io/v1')
-        .setProject('66487fe600145ff0181e');
-
-    const databases = new Databases(client);
-
     useEffect(() => {
+        const client = new Client()
+            .setEndpoint('https://cloud.appwrite.io/v1')
+            .setProject('66487fe600145ff0181e');
+
+        const databases = new Databases(client);
+
         const fetchStudents = async () => {
             try {
                 const response = await databases.listDocuments(
@@ -21,7 +21,6 @@ function MainContent() {
                     'db.pixelthreader.studentsdbms4141'
                 );
                 setStudents(response.documents);
-                console.log(response.documents);
             } catch (error) {
                 console.log(error);
             }
@@ -74,13 +73,16 @@ function MainContent() {
                     <tbody>
                         {students.length === 0 && <tr><td colSpan={4}>Loading...</td></tr>}
                         {students.map((student, index) => (
-                            <TableRow
-                                key={index}
-                                studentId={student.$id}
-                                sno={index + 1}
-                                firstname={student.firstname}
-                                lastname={student.lastname}
-                            />
+                            <tr key={student.$id}>
+                                <th scope="row">{index + 1}</th>
+                                <td>{student.firstname}</td>
+                                <td>{student.lastname}</td>
+                                <td className='d-flex justify-content-start align-items-center gap-2'>
+                                    <Link href={`/students/${student.$id}/student`}>
+                                        <a className="btn btn-sm btn-info">View</a>
+                                    </Link>
+                                </td>
+                            </tr>
                         ))}
                     </tbody>
                 </table>
