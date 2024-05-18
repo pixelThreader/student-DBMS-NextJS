@@ -3,6 +3,7 @@ import React from 'react';
 export default function Page({ params }) {
     return (
         <>
+            <div>Student ID: {params.$id}</div>
             <div>Student First Name: {params.firstname}</div>
             <div>Student Last Name: {params.lastname}</div>
             <div>Student Address: {params.address}</div>
