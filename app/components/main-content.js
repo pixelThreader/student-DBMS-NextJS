@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { Client, Databases } from 'appwrite';
 import TableRow from './table-row';
@@ -72,7 +74,7 @@ function MainContent() {
                         {students.length === 0 && <tr><td colSpan={4}>Loading...</td></tr>}
                         {students.map((student, index) => (
                             <TableRow
-                                key={student.$id}
+                                key={index}
                                 studentId={student.$id}
                                 sno={index + 1}
                                 firstname={student.firstname}
