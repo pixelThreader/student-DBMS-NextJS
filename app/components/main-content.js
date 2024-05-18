@@ -21,6 +21,7 @@ function MainContent() {
                     'db.pixelthreader.studentsdbms4141'
                 );
                 setStudents(response.documents);
+                console.log(response.documents);
             } catch (error) {
                 console.log(error);
             }
