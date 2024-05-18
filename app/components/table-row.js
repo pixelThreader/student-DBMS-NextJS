@@ -2,7 +2,7 @@ import React from 'react'
 
 function TableRow(props) {
     return (
-        <tr className='table-row cursor-pointer' target={props.studentId}>
+        <tr role='button' className='table-row' target={props.studentId}>
             <th scope="row">{props.sno}</th>
             <td>{props.firstname}</td>
             <td>{props.lastname}</td>
