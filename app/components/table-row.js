@@ -39,7 +39,7 @@ function TableRow(props) {
             <td>{student.lastname}</td>
             <td>{props.email}</td>
             <td className='d-flex justify-content-start align-items-center gap-2'>
-                <Link href={props['student-dashboard']} className="btn btn-sm btn-primary">View</Link>
+                <Link href={student['student-dashboard'] ? student['student-dashboard'] : 'Email not fetched'} className="btn btn-sm btn-primary">View</Link>
                 <button target={props?.studentId} className="btn btn-sm btn-info">Edit</button>
                 <button target={props?.studentId} className="btn btn-sm btn-outline-danger">Delete</button>
             </td>

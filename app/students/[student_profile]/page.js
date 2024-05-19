@@ -1,41 +1,47 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { Client, Databases, Query } from 'appwrite';
 
-export default function Page() {
+export default function Page({ params }) {
     const [student, setStudent] = useState(null);
-    const router = useRouter();
-    const { student_profile } = router.query;
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        if (!student_profile) return; // Wait until the profile ID is available
-
         const client = new Client()
-            .setEndpoint('https://cloud.appwrite.io/v1')
-            .setProject('66487fe600145ff0181e');
+            .setEndpoint("https://cloud.appwrite.io/v1")
+            .setProject("66487fe600145ff0181e");
 
         const databases = new Databases(client);
 
         const fetchStudent = async () => {
             try {
                 const response = await databases.listDocuments(
-                    'db.appwrt.pixelthreader749404',
-                    'db.pixelthreader.studentsdbms4141',
-                    [Query.equal('$id', student_profile)]
+                    "db.appwrt.pixelthreader749404",
+                    "db.pixelthreader.studentsdbms4141",
+                    [
+                        Query.equal('$id', params.student_profile)
+                    ]
                 );
                 setStudent(response.documents[0]);
             } catch (error) {
-                console.log(error);
+                setError(error);
+                console.error(error);
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchStudent();
-    }, [student_profile]);
+    }, [params.student_profile]);
 
-    if (!student) {
+    if (loading) {
         return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error fetching student data.</div>;
     }
 
     return (
