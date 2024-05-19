@@ -7,6 +7,18 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
 	title: "Student DBMS",
 	description: "A simple CRUD application in NEXT.js",
+	icons: {
+		icon: [
+			{
+				url: '/favicon.ico',
+				media: '(prefers-color-scheme: light)',
+			},
+			{
+				url: '/favicon.ico',
+				media: '(prefers-color-scheme: dark)',
+			},
+		],
+	},
 };
 
 export default function RootLayout({ children }) {

@@ -1,12 +1,32 @@
-import React from 'react'
+"use client"
+
+import { React, useEffect, useState } from 'react';
+import Link from 'next/link';
 
 function Navbar() {
+    const [theme, setTheme] = useState('light');
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            setTheme(savedTheme);
+            document.body.setAttribute('data-bs-theme', savedTheme);
+        }
+    }, []);
+
+    const toggleTheme = () => {
+        const newTheme = theme === 'light' ? 'dark' : 'light';
+        setTheme(newTheme);
+        document.body.setAttribute('data-bs-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    };
+
     return (
-        <nav className="navbar navbar-expand-lg bg-body-tertiary">
+        <nav className="sticky navbar navbar-expand-lg bg-body-tertiary">
             <div className="container-fluid">
-                <a className="navbar-brand" href="#">
+                <Link className="navbar-brand" href="#">
                     Navbar
-                </a>
+                </Link>
                 <button
                     className="navbar-toggler"
                     type="button"
@@ -21,17 +41,17 @@ function Navbar() {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <a className="nav-link active" aria-current="page" href="#">
+                            <Link className="nav-link active" aria-current="page" href="#">
                                 Home
-                            </a>
+                            </Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">
+                            <Link className="nav-link" href="#">
                                 Link
-                            </a>
+                            </Link>
                         </li>
                         <li className="nav-item dropdown">
-                            <a
+                            <Link
                                 className="nav-link dropdown-toggle"
                                 href="#"
                                 role="button"
@@ -39,35 +59,35 @@ function Navbar() {
                                 aria-expanded="false"
                             >
                                 Dropdown
-                            </a>
+                            </Link>
                             <ul className="dropdown-menu">
                                 <li>
-                                    <a className="dropdown-item" href="#">
+                                    <Link className="dropdown-item" href="#">
                                         Action
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a className="dropdown-item" href="#">
+                                    <Link className="dropdown-item" href="#">
                                         Another action
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li>
                                     <hr className="dropdown-divider" />
                                 </li>
                                 <li>
-                                    <a className="dropdown-item" href="#">
+                                    <Link className="dropdown-item" href="#">
                                         Something else here
-                                    </a>
+                                    </Link>
                                 </li>
                             </ul>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link disabled" aria-disabled="true">
+                            <Link className="nav-link disabled" href="#" aria-disabled="true">
                                 Disabled
-                            </a>
+                            </Link>
                         </li>
                     </ul>
-                    <form className="d-flex" role="search">
+                    <form className="d-flex me-3" role="search">
                         <input
                             className="form-control me-2"
                             type="search"
@@ -78,11 +98,23 @@ function Navbar() {
                             Search
                         </button>
                     </form>
+                    <div className="form-check form-switch">
+                        <input
+                            className="form-check-input"
+                            type="checkbox"
+                            role="switch"
+                            id="flexSwitchCheckDefault"
+                            checked={theme === 'dark'}
+                            onChange={toggleTheme}
+                        />
+                        <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
+                            Dark Mode
+                        </label>
+                    </div>
                 </div>
             </div>
         </nav>
-
-    )
+    );
 }
 
-export default Navbar
+export default Navbar;
